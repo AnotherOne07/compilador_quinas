@@ -1,0 +1,36 @@
+-- O código abaixo faz a equação de bhaskara
+
+[ numero RaizDelta [numero coefA | numero coefB | numero coefC] : 
+ [
+ 	[ ¨ numero numeroConstante [0b0100] ] --4 em binário
+ 	
+ 	< <coefB ' 2> - <numeroConstante . coefA . coefC> > ' <1,0 / 2,0>
+ 	
+ ]
+]
+
+[ numero RaizPos [numero coefA | numero coefB | numero coefC] :
+ [	
+ 	< <-coefB> + <RaizDelta [coefA | coefB | coefC]> > / <2 . coefA>
+ ]
+]
+ 
+[ numero RaizNeg [numero coefA | numero coefB | numero coefC] :
+ [
+ 	[ ¨ numero numeroConstante [0b0010] ] --2 em binário
+ 	
+ 	< <-coefB> -  <RaizDelta [coefA | coefB | coefC]> > / <numeroConstante . coefA>
+ ]
+]
+
+[ numero Resultado [numero coefA | numero coefB | numero coefC] : 
+	[
+		RaizPos[coefA | coefB | coefC] + RaizNeg[coefA | coefB | coefC]
+	]
+]
+
+++ [ numero Principal []:
+	 [ Resultado[ 4,0 | 7,0 | 9,0] ] 
+	 /-- o codigo vai retornar a Fórmula de bhaskara, inserindo os valores dos 
+	 coeficientes de uma equação de segundo grau --/
+]

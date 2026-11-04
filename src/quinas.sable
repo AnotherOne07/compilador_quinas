@@ -1,0 +1,181 @@
+Package quinas;
+
+Helpers
+    digito = ['0' .. '9'];
+    digito_binario = ['0' .. '1'];
+    minuscula = ['a' .. 'z'];
+    maiuscula = ['A' .. 'Z'];
+    letra = minuscula | maiuscula;
+    cr = 13;
+    lf = 10;
+    rc = 13;
+ 	nl = 10;
+    caractere = [0 .. 0xFFFF]; /* usando a tabela ascii estendida para cobrir acentuação */
+    sem_quebra = [caractere - [cr + lf]]; /* cr e lf são caracteres de quebra de linha */
+    sem_hifen = [caractere - '-'];
+    sem_barra = [caractere - '/'];
+
+States
+    inicio_linha, corpo_linha;
+
+Tokens
+    /* Palavras reservadas e literais booleanos */
+    {inicio_linha->corpo_linha, corpo_linha} kw_numero = 'numero';
+    {inicio_linha->corpo_linha, corpo_linha} kw_booleano = 'booleano';
+    {inicio_linha->corpo_linha, corpo_linha} lit_v = 'V';
+    {inicio_linha->corpo_linha, corpo_linha} lit_f = 'F';
+
+    /* Numerais */
+    {inicio_linha->corpo_linha, corpo_linha} numeral_real = digito+ ',' digito+;
+    {inicio_linha->corpo_linha, corpo_linha} numeral_int = digito+ | '0b' digito_binario+;
+
+    /* Operadores e pontuação */
+    {inicio_linha->corpo_linha, corpo_linha} inicio = '++';
+    {inicio_linha->corpo_linha, corpo_linha} soma = '+';
+    {inicio_linha->corpo_linha, corpo_linha} subtracao = '-';
+    {inicio_linha->corpo_linha, corpo_linha} multiplicacao = '.';
+    {inicio_linha->corpo_linha, corpo_linha} divisao_inteira = '//';
+    {inicio_linha->corpo_linha, corpo_linha} divisao_real = '/';
+    {inicio_linha->corpo_linha, corpo_linha} resto = 92;
+    {inicio_linha->corpo_linha, corpo_linha} potencia = '´';
+    {inicio_linha->corpo_linha, corpo_linha} maior_que = '>>';
+    {inicio_linha->corpo_linha, corpo_linha} menor_que = '<<';
+    {inicio_linha->corpo_linha, corpo_linha} igual = '==';
+    {inicio_linha->corpo_linha, corpo_linha} e = '^';
+    {inicio_linha->corpo_linha, corpo_linha} nao = '¬';
+    {inicio_linha->corpo_linha, corpo_linha} ou = 'v';
+    {inicio_linha->corpo_linha, corpo_linha} abre_colchete = '[';
+    {inicio_linha->corpo_linha, corpo_linha} fecha_colchete = ']';
+    {inicio_linha->corpo_linha, corpo_linha} abre_agrupamento = '<';
+    {inicio_linha->corpo_linha, corpo_linha} fecha_agrupamento = '>';
+    {inicio_linha->corpo_linha, corpo_linha} dois_pontos = ':';
+    {inicio_linha->corpo_linha, corpo_linha} separador = '|';
+    {inicio_linha->corpo_linha, corpo_linha} guarda = '||';
+    {inicio_linha->corpo_linha, corpo_linha} atribuicao = '=';
+    {inicio_linha->corpo_linha, corpo_linha} caso_padrao = '#';
+    {inicio_linha->corpo_linha, corpo_linha} declaracao_constante = '¨';
+
+    /* Nomes completamente maiúsculos são reservados para constantes */
+    {inicio_linha->corpo_linha, corpo_linha} idconst = maiuscula maiuscula+;
+    {inicio_linha->corpo_linha, corpo_linha} idfuncao = maiuscula letra+;
+    {inicio_linha->corpo_linha, corpo_linha} id = minuscula letra+;
+
+    /* O comentário de bloco termina na primeira ocorrência de --/ */
+    {inicio_linha->corpo_linha, corpo_linha} comentario_bloco = '/--' (sem_hifen | '-' sem_hifen | '--' sem_barra)* '-'? '--/';
+    {inicio_linha} comentario_linha = '--' sem_quebra*;
+    {inicio_linha->corpo_linha, corpo_linha} espacos = (' ' | 9)+;
+    {inicio_linha, corpo_linha->inicio_linha} quebra = cr lf | cr | lf;
+    {inicio_linha->corpo_linha, corpo_linha} vazio = (' ' | rc | nl)+;
+
+Ignored Tokens
+    comentario_bloco,
+    comentario_linha,
+    espacos,
+    quebra;
+    
+Productions
+
+exp = def_funcao;
+
+def_funcao = 
+	{funcao_inicial} inicio def_funcao |
+	{def_funcao} corpo_funcao;
+	
+corpo_funcao = abre_colchete def_assinatura_funcao fecha_colchete;
+
+def_assinatura_funcao = def_id_funcao def_param dois_pontos def_expressao;
+
+def_id_funcao = 
+	{funcao_sem_args} def_tipo idfuncao |
+	{funcao_com_args} def_tipo idfuncao abre_colchete def_param fecha_colchete;
+	
+chamada_funcao = idfuncao def_lista_args;
+
+def_param = 
+	{param_modelo} abre_colchete def_param fecha_colchete |
+	{sem_args} vazio |
+	{primeiro_arg} parametro def_param |
+	{args_seguintes} separador parametro def_param;
+	
+parametro =
+	{def_param_id} def_tipo id |
+	{def_param_funcao} def_id_funcao;
+
+def_expressao = abre_colchete def_corpo_expressao fecha_colchete;
+
+def_corpo_expressao = operador_ou;
+
+operador_ou = 
+	{ou} operador_ou ou operador_e |
+	{base} operador_e;
+
+operador_e = 
+	{e} operador_e e operador_relacional |
+	{base} operador_relacional;
+
+operador_relacional = 
+	{maior_que} operador_relacional maior_que operador_aditivo |
+	{menor_que} operador_relacional menor_que operador_aditivo |
+	{igual} operador_relacional igual operador_aditivo |
+	{base} operador_aditivo;
+
+operador_aditivo = 
+	{soma} operador_aditivo soma operador_multiplicativo |
+	{subtracao} operador_aditivo subtracao operador_multiplicativo |
+	{base} operador_multiplicativo;
+
+operador_multiplicativo = 
+	{multiplicacao} operador_multiplicativo multiplicacao exp_potencia |
+	{divisao_real} operador_multiplicativo divisao_real exp_potencia |
+	{divisao_inteira} operador_multiplicativo divisao_inteira exp_potencia |
+	{resto} operador_multiplicativo resto exp_potencia |
+	{base} exp_potencia;
+
+exp_potencia = 
+	{potencia} operador_unario potencia exp_potencia |
+	{base} operador_unario;
+
+operador_unario = 
+	{operador_negativo} subtracao operador_unario |
+	{operador_negacao} nao operador_unario |
+	{base} termo_primario;
+
+termo_primario = 
+	{numero} numero |
+	{id} id |
+	{id_const} idconst |
+	{bloco_exp} bloco_exp |
+	{chamada} chamada_funcao |
+	{guarda} def_guarda |
+	{agrupamento} abre_agrupamento def_corpo_expressao fecha_agrupamento;
+	
+def_lista_args = 
+	{lista_args} abre_colchete def_lista_args fecha_colchete |
+	{sem_args} vazio |
+	{arg_unico} id def_lista_args |
+	{arg_seguinte} separador id def_lista_args;
+
+def_id = def_tipo id;
+
+bloco_exp = abre_colchete def_const def_corpo_expressao fecha_colchete;
+
+def_guarda = abre_colchete exp_guarda fecha_colchete;
+
+exp_guarda =
+	{guarda_expressao} guarda [esq]:def_corpo_expressao atribuicao [dir]:def_corpo_expressao exp_guarda ||
+	{guarda_caso_padrao} guarda caso_padrao atribuicao def_corpo_expressao;
+
+def_const = def_tipo idconst abre_colchete def_corpo_expressao fecha_colchete;
+	
+def_tipo = 
+	{tipo_numero} kw_numero |
+	{tipo_booleano} kw_booleano;
+
+numero = 
+	{numero_real} numeral_real |
+	{numero_inteiro} numeral_int;
+	
+booleano = 
+	{booleano_v} lit_v |
+	{booleano_f} lit_f;
+	
