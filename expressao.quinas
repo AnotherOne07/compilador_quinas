@@ -1,36 +1,52 @@
--- O código abaixo faz a equação de bhaskara
-
-[ numero RaizDelta [numero coefA | numero coefB | numero coefC] : 
+[ numero ObterFatorVento [] :
  [
- 	[ ¨ numero numeroConstante [0b0100] ] --4 em binário
- 	
- 	< <coefB ' 2> - <numeroConstante . coefA . coefC> > ' <1,0 / 2,0>
- 	
+	1,05
  ]
 ]
 
-[ numero RaizPos [numero coefA | numero coefB | numero coefC] :
- [	
- 	< <-coefB> + <RaizDelta [coefA | coefB | coefC]> > / <2 . coefA>
- ]
-]
- 
-[ numero RaizNeg [numero coefA | numero coefB | numero coefC] :
+[ numero AplicarCorrecaoVento [numero alcance | numero ProvedorVento[]] :
  [
- 	[ ¨ numero numeroConstante [0b0010] ] --2 em binário
- 	
- 	< <-coefB> -  <RaizDelta [coefA | coefB | coefC]> > / <numeroConstante . coefA>
+	alcance . Logaritmo[ProvedorVento[] + 9,0]
  ]
 ]
 
-[ numero Resultado [numero coefA | numero coefB | numero coefC] : 
+[ numero ProcessarFator [numero alc | numero Transformar[numero alcance | numero Provedor[]]] :
+ [
+	Transformar[alc | ObterFatorVento]
+ ]
+]
+
+[ numero CalcularDistancia [numero angulo | numero velocidade] :
+ [
+	2,0 . <velocidade ´ 2,0> . Cosseno[angulo] . Seno[angulo] / 9,78216
+ ]
+]
+
+[ numero BuscaTernaria [numero ini | numero fim | numero velocidade | numero passos] :
+ [
 	[
-		RaizPos[coefA | coefB | coefC] + RaizNeg[coefA | coefB | coefC]
+	 || < <passos == 0> v < <fim - ini> << 0,000001 > ^ ¬ <-velocidade >> 0,0> > = <ini + fim> / 2,0
+	 || # = 
+		[
+		 [  numero PASSOSREDUZIDOS [passos // 2] ]
+		 [  numero RESTOPASSOS [passos \ 2] ]
+		 [  numero MUM [ini + <fim - ini> / 3,0] ]
+		 [  numero MDOIS [fim - <fim - ini> / 3,0] ]
+		 
+		 [  numero DISTUM [ProcessarFator[CalcularDistancia[MUM | velocidade] | AplicarCorrecaoVento]] ]
+		 [  numero DISTDOIS [ProcessarFator[CalcularDistancia[MDOIS | velocidade] | AplicarCorrecaoVento]] ]
+		 
+		 [
+		  || <DISTUM << DISTDOIS> = BuscaTernaria[MUM | fim | velocidade | PASSOSREDUZIDOS + RESTOPASSOS]
+		  || # = BuscaTernaria[ini | MDOIS | velocidade | PASSOSREDUZIDOS]
+		 ]
+		]
 	]
+ ]
 ]
 
-++ [ numero Principal []:
-	 [ Resultado[ 4,0 | 7,0 | 9,0] ] 
-	 /-- o codigo vai retornar a Fórmula de bhaskara, inserindo os valores dos 
-	 coeficientes de uma equação de segundo grau --/
+++ [ numero Principal [] :
+ [
+	BuscaTernaria[0,0 | 1,571 | 30,0 | 20]
+ ]
 ]

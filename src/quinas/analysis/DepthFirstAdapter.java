@@ -77,24 +77,44 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAFuncaoInicialDefFuncao(node);
     }
 
-    public void inADefFuncaoDefFuncao(ADefFuncaoDefFuncao node)
+    public void inAVazioDefFuncao(AVazioDefFuncao node)
     {
         defaultIn(node);
     }
 
-    public void outADefFuncaoDefFuncao(ADefFuncaoDefFuncao node)
+    public void outAVazioDefFuncao(AVazioDefFuncao node)
     {
         defaultOut(node);
     }
 
-    public void caseADefFuncaoDefFuncao(ADefFuncaoDefFuncao node)
+    public void caseAVazioDefFuncao(AVazioDefFuncao node)
     {
-        inADefFuncaoDefFuncao(node);
+        inAVazioDefFuncao(node);
+        outAVazioDefFuncao(node);
+    }
+
+    public void inACorpoFuncaoDefFuncao(ACorpoFuncaoDefFuncao node)
+    {
+        defaultIn(node);
+    }
+
+    public void outACorpoFuncaoDefFuncao(ACorpoFuncaoDefFuncao node)
+    {
+        defaultOut(node);
+    }
+
+    public void caseACorpoFuncaoDefFuncao(ACorpoFuncaoDefFuncao node)
+    {
+        inACorpoFuncaoDefFuncao(node);
         if(node.getCorpoFuncao() != null)
         {
             node.getCorpoFuncao().apply(this);
         }
-        outADefFuncaoDefFuncao(node);
+        if(node.getDefFuncao() != null)
+        {
+            node.getDefFuncao().apply(this);
+        }
+        outACorpoFuncaoDefFuncao(node);
     }
 
     public void inACorpoFuncao(ACorpoFuncao node)
@@ -157,19 +177,19 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outADefAssinaturaFuncao(node);
     }
 
-    public void inAFuncaoSemArgsDefIdFuncao(AFuncaoSemArgsDefIdFuncao node)
+    public void inAIdFuncaoDefIdFuncao(AIdFuncaoDefIdFuncao node)
     {
         defaultIn(node);
     }
 
-    public void outAFuncaoSemArgsDefIdFuncao(AFuncaoSemArgsDefIdFuncao node)
+    public void outAIdFuncaoDefIdFuncao(AIdFuncaoDefIdFuncao node)
     {
         defaultOut(node);
     }
 
-    public void caseAFuncaoSemArgsDefIdFuncao(AFuncaoSemArgsDefIdFuncao node)
+    public void caseAIdFuncaoDefIdFuncao(AIdFuncaoDefIdFuncao node)
     {
-        inAFuncaoSemArgsDefIdFuncao(node);
+        inAIdFuncaoDefIdFuncao(node);
         if(node.getDefTipo() != null)
         {
             node.getDefTipo().apply(this);
@@ -178,26 +198,50 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getIdfuncao().apply(this);
         }
-        outAFuncaoSemArgsDefIdFuncao(node);
+        outAIdFuncaoDefIdFuncao(node);
     }
 
-    public void inAFuncaoComArgsDefIdFuncao(AFuncaoComArgsDefIdFuncao node)
+    public void inAFuncaoPrimeiraClasseDefIdFuncao(AFuncaoPrimeiraClasseDefIdFuncao node)
     {
         defaultIn(node);
     }
 
-    public void outAFuncaoComArgsDefIdFuncao(AFuncaoComArgsDefIdFuncao node)
+    public void outAFuncaoPrimeiraClasseDefIdFuncao(AFuncaoPrimeiraClasseDefIdFuncao node)
     {
         defaultOut(node);
     }
 
-    public void caseAFuncaoComArgsDefIdFuncao(AFuncaoComArgsDefIdFuncao node)
+    public void caseAFuncaoPrimeiraClasseDefIdFuncao(AFuncaoPrimeiraClasseDefIdFuncao node)
     {
-        inAFuncaoComArgsDefIdFuncao(node);
+        inAFuncaoPrimeiraClasseDefIdFuncao(node);
         if(node.getDefTipo() != null)
         {
             node.getDefTipo().apply(this);
         }
+        if(node.getIdfuncao() != null)
+        {
+            node.getIdfuncao().apply(this);
+        }
+        if(node.getDefParam() != null)
+        {
+            node.getDefParam().apply(this);
+        }
+        outAFuncaoPrimeiraClasseDefIdFuncao(node);
+    }
+
+    public void inAComArgsChamadaFuncao(AComArgsChamadaFuncao node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAComArgsChamadaFuncao(AComArgsChamadaFuncao node)
+    {
+        defaultOut(node);
+    }
+
+    public void caseAComArgsChamadaFuncao(AComArgsChamadaFuncao node)
+    {
+        inAComArgsChamadaFuncao(node);
         if(node.getIdfuncao() != null)
         {
             node.getIdfuncao().apply(this);
@@ -206,39 +250,35 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getAbreColchete().apply(this);
         }
-        if(node.getDefParam() != null)
+        if(node.getDefListaArgs() != null)
         {
-            node.getDefParam().apply(this);
+            node.getDefListaArgs().apply(this);
         }
         if(node.getFechaColchete() != null)
         {
             node.getFechaColchete().apply(this);
         }
-        outAFuncaoComArgsDefIdFuncao(node);
+        outAComArgsChamadaFuncao(node);
     }
 
-    public void inAChamadaFuncao(AChamadaFuncao node)
+    public void inASemArgsChamadaFuncao(ASemArgsChamadaFuncao node)
     {
         defaultIn(node);
     }
 
-    public void outAChamadaFuncao(AChamadaFuncao node)
+    public void outASemArgsChamadaFuncao(ASemArgsChamadaFuncao node)
     {
         defaultOut(node);
     }
 
-    public void caseAChamadaFuncao(AChamadaFuncao node)
+    public void caseASemArgsChamadaFuncao(ASemArgsChamadaFuncao node)
     {
-        inAChamadaFuncao(node);
+        inASemArgsChamadaFuncao(node);
         if(node.getIdfuncao() != null)
         {
             node.getIdfuncao().apply(this);
         }
-        if(node.getDefListaArgs() != null)
-        {
-            node.getDefListaArgs().apply(this);
-        }
-        outAChamadaFuncao(node);
+        outASemArgsChamadaFuncao(node);
     }
 
     public void inAParamModeloDefParam(AParamModeloDefParam node)
@@ -258,9 +298,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getAbreColchete().apply(this);
         }
-        if(node.getDefParam() != null)
+        if(node.getListaParam() != null)
         {
-            node.getDefParam().apply(this);
+            node.getListaParam().apply(this);
         }
         if(node.getFechaColchete() != null)
         {
@@ -282,63 +322,91 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseASemArgsDefParam(ASemArgsDefParam node)
     {
         inASemArgsDefParam(node);
-        if(node.getVazio() != null)
-        {
-            node.getVazio().apply(this);
-        }
         outASemArgsDefParam(node);
     }
 
-    public void inAPrimeiroArgDefParam(APrimeiroArgDefParam node)
+    public void inAVazioListaParam(AVazioListaParam node)
     {
         defaultIn(node);
     }
 
-    public void outAPrimeiroArgDefParam(APrimeiroArgDefParam node)
+    public void outAVazioListaParam(AVazioListaParam node)
     {
         defaultOut(node);
     }
 
-    public void caseAPrimeiroArgDefParam(APrimeiroArgDefParam node)
+    public void caseAVazioListaParam(AVazioListaParam node)
     {
-        inAPrimeiroArgDefParam(node);
+        inAVazioListaParam(node);
+        outAVazioListaParam(node);
+    }
+
+    public void inAElementosListaParam(AElementosListaParam node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAElementosListaParam(AElementosListaParam node)
+    {
+        defaultOut(node);
+    }
+
+    public void caseAElementosListaParam(AElementosListaParam node)
+    {
+        inAElementosListaParam(node);
+        if(node.getElementosParam() != null)
+        {
+            node.getElementosParam().apply(this);
+        }
+        outAElementosListaParam(node);
+    }
+
+    public void inAPrimeiroArgElementosParam(APrimeiroArgElementosParam node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAPrimeiroArgElementosParam(APrimeiroArgElementosParam node)
+    {
+        defaultOut(node);
+    }
+
+    public void caseAPrimeiroArgElementosParam(APrimeiroArgElementosParam node)
+    {
+        inAPrimeiroArgElementosParam(node);
         if(node.getParametro() != null)
         {
             node.getParametro().apply(this);
         }
-        if(node.getDefParam() != null)
-        {
-            node.getDefParam().apply(this);
-        }
-        outAPrimeiroArgDefParam(node);
+        outAPrimeiroArgElementosParam(node);
     }
 
-    public void inAArgsSeguintesDefParam(AArgsSeguintesDefParam node)
+    public void inAArgsSeguintesElementosParam(AArgsSeguintesElementosParam node)
     {
         defaultIn(node);
     }
 
-    public void outAArgsSeguintesDefParam(AArgsSeguintesDefParam node)
+    public void outAArgsSeguintesElementosParam(AArgsSeguintesElementosParam node)
     {
         defaultOut(node);
     }
 
-    public void caseAArgsSeguintesDefParam(AArgsSeguintesDefParam node)
+    public void caseAArgsSeguintesElementosParam(AArgsSeguintesElementosParam node)
     {
-        inAArgsSeguintesDefParam(node);
+        inAArgsSeguintesElementosParam(node);
+        if(node.getParametro() != null)
+        {
+            node.getParametro().apply(this);
+        }
         if(node.getSeparador() != null)
         {
             node.getSeparador().apply(this);
         }
-        if(node.getParametro() != null)
+        if(node.getElementosParam() != null)
         {
-            node.getParametro().apply(this);
+            node.getElementosParam().apply(this);
         }
-        if(node.getDefParam() != null)
-        {
-            node.getDefParam().apply(this);
-        }
-        outAArgsSeguintesDefParam(node);
+        outAArgsSeguintesElementosParam(node);
     }
 
     public void inADefParamIdParametro(ADefParamIdParametro node)
@@ -1105,34 +1173,6 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAAgrupamentoTermoPrimario(node);
     }
 
-    public void inAListaArgsDefListaArgs(AListaArgsDefListaArgs node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAListaArgsDefListaArgs(AListaArgsDefListaArgs node)
-    {
-        defaultOut(node);
-    }
-
-    public void caseAListaArgsDefListaArgs(AListaArgsDefListaArgs node)
-    {
-        inAListaArgsDefListaArgs(node);
-        if(node.getAbreColchete() != null)
-        {
-            node.getAbreColchete().apply(this);
-        }
-        if(node.getDefListaArgs() != null)
-        {
-            node.getDefListaArgs().apply(this);
-        }
-        if(node.getFechaColchete() != null)
-        {
-            node.getFechaColchete().apply(this);
-        }
-        outAListaArgsDefListaArgs(node);
-    }
-
     public void inASemArgsDefListaArgs(ASemArgsDefListaArgs node)
     {
         defaultIn(node);
@@ -1146,10 +1186,6 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseASemArgsDefListaArgs(ASemArgsDefListaArgs node)
     {
         inASemArgsDefListaArgs(node);
-        if(node.getVazio() != null)
-        {
-            node.getVazio().apply(this);
-        }
         outASemArgsDefListaArgs(node);
     }
 
@@ -1166,13 +1202,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAArgUnicoDefListaArgs(AArgUnicoDefListaArgs node)
     {
         inAArgUnicoDefListaArgs(node);
-        if(node.getId() != null)
+        if(node.getDefCorpoExpressao() != null)
         {
-            node.getId().apply(this);
-        }
-        if(node.getDefListaArgs() != null)
-        {
-            node.getDefListaArgs().apply(this);
+            node.getDefCorpoExpressao().apply(this);
         }
         outAArgUnicoDefListaArgs(node);
     }
@@ -1190,13 +1222,13 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAArgSeguinteDefListaArgs(AArgSeguinteDefListaArgs node)
     {
         inAArgSeguinteDefListaArgs(node);
+        if(node.getDefCorpoExpressao() != null)
+        {
+            node.getDefCorpoExpressao().apply(this);
+        }
         if(node.getSeparador() != null)
         {
             node.getSeparador().apply(this);
-        }
-        if(node.getId() != null)
-        {
-            node.getId().apply(this);
         }
         if(node.getDefListaArgs() != null)
         {
@@ -1246,19 +1278,59 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getAbreColchete().apply(this);
         }
-        if(node.getDefConst() != null)
+        if(node.getBlocoInterno() != null)
         {
-            node.getDefConst().apply(this);
-        }
-        if(node.getDefCorpoExpressao() != null)
-        {
-            node.getDefCorpoExpressao().apply(this);
+            node.getBlocoInterno().apply(this);
         }
         if(node.getFechaColchete() != null)
         {
             node.getFechaColchete().apply(this);
         }
         outABlocoExp(node);
+    }
+
+    public void inAComConstantesBlocoInterno(AComConstantesBlocoInterno node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAComConstantesBlocoInterno(AComConstantesBlocoInterno node)
+    {
+        defaultOut(node);
+    }
+
+    public void caseAComConstantesBlocoInterno(AComConstantesBlocoInterno node)
+    {
+        inAComConstantesBlocoInterno(node);
+        if(node.getDefConst() != null)
+        {
+            node.getDefConst().apply(this);
+        }
+        if(node.getBlocoInterno() != null)
+        {
+            node.getBlocoInterno().apply(this);
+        }
+        outAComConstantesBlocoInterno(node);
+    }
+
+    public void inASemConstantesBlocoInterno(ASemConstantesBlocoInterno node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASemConstantesBlocoInterno(ASemConstantesBlocoInterno node)
+    {
+        defaultOut(node);
+    }
+
+    public void caseASemConstantesBlocoInterno(ASemConstantesBlocoInterno node)
+    {
+        inASemConstantesBlocoInterno(node);
+        if(node.getDefCorpoExpressao() != null)
+        {
+            node.getDefCorpoExpressao().apply(this);
+        }
+        outASemConstantesBlocoInterno(node);
     }
 
     public void inADefGuarda(ADefGuarda node)
@@ -1386,6 +1458,10 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseADefConst(ADefConst node)
     {
         inADefConst(node);
+        if(node.getAcExterno() != null)
+        {
+            node.getAcExterno().apply(this);
+        }
         if(node.getDefTipo() != null)
         {
             node.getDefTipo().apply(this);
@@ -1394,17 +1470,21 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getIdconst().apply(this);
         }
-        if(node.getAbreColchete() != null)
+        if(node.getAcInterno() != null)
         {
-            node.getAbreColchete().apply(this);
+            node.getAcInterno().apply(this);
         }
         if(node.getDefCorpoExpressao() != null)
         {
             node.getDefCorpoExpressao().apply(this);
         }
-        if(node.getFechaColchete() != null)
+        if(node.getFcInterno() != null)
         {
-            node.getFechaColchete().apply(this);
+            node.getFcInterno().apply(this);
+        }
+        if(node.getFcExterno() != null)
+        {
+            node.getFcExterno().apply(this);
         }
         outADefConst(node);
     }

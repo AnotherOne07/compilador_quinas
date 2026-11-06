@@ -7,47 +7,82 @@ import quinas.analysis.*;
 
 public final class ADefConst extends PDefConst
 {
+    private TAbreColchete _acExterno_;
     private PDefTipo _defTipo_;
     private TIdconst _idconst_;
-    private TAbreColchete _abreColchete_;
+    private TAbreColchete _acInterno_;
     private PDefCorpoExpressao _defCorpoExpressao_;
-    private TFechaColchete _fechaColchete_;
+    private TFechaColchete _fcInterno_;
+    private TFechaColchete _fcExterno_;
 
     public ADefConst()
     {
     }
 
     public ADefConst(
+        TAbreColchete _acExterno_,
         PDefTipo _defTipo_,
         TIdconst _idconst_,
-        TAbreColchete _abreColchete_,
+        TAbreColchete _acInterno_,
         PDefCorpoExpressao _defCorpoExpressao_,
-        TFechaColchete _fechaColchete_)
+        TFechaColchete _fcInterno_,
+        TFechaColchete _fcExterno_)
     {
+        setAcExterno(_acExterno_);
+
         setDefTipo(_defTipo_);
 
         setIdconst(_idconst_);
 
-        setAbreColchete(_abreColchete_);
+        setAcInterno(_acInterno_);
 
         setDefCorpoExpressao(_defCorpoExpressao_);
 
-        setFechaColchete(_fechaColchete_);
+        setFcInterno(_fcInterno_);
+
+        setFcExterno(_fcExterno_);
 
     }
     public Object clone()
     {
         return new ADefConst(
+            (TAbreColchete) cloneNode(_acExterno_),
             (PDefTipo) cloneNode(_defTipo_),
             (TIdconst) cloneNode(_idconst_),
-            (TAbreColchete) cloneNode(_abreColchete_),
+            (TAbreColchete) cloneNode(_acInterno_),
             (PDefCorpoExpressao) cloneNode(_defCorpoExpressao_),
-            (TFechaColchete) cloneNode(_fechaColchete_));
+            (TFechaColchete) cloneNode(_fcInterno_),
+            (TFechaColchete) cloneNode(_fcExterno_));
     }
 
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseADefConst(this);
+    }
+
+    public TAbreColchete getAcExterno()
+    {
+        return _acExterno_;
+    }
+
+    public void setAcExterno(TAbreColchete node)
+    {
+        if(_acExterno_ != null)
+        {
+            _acExterno_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        _acExterno_ = node;
     }
 
     public PDefTipo getDefTipo()
@@ -100,16 +135,16 @@ public final class ADefConst extends PDefConst
         _idconst_ = node;
     }
 
-    public TAbreColchete getAbreColchete()
+    public TAbreColchete getAcInterno()
     {
-        return _abreColchete_;
+        return _acInterno_;
     }
 
-    public void setAbreColchete(TAbreColchete node)
+    public void setAcInterno(TAbreColchete node)
     {
-        if(_abreColchete_ != null)
+        if(_acInterno_ != null)
         {
-            _abreColchete_.parent(null);
+            _acInterno_.parent(null);
         }
 
         if(node != null)
@@ -122,7 +157,7 @@ public final class ADefConst extends PDefConst
             node.parent(this);
         }
 
-        _abreColchete_ = node;
+        _acInterno_ = node;
     }
 
     public PDefCorpoExpressao getDefCorpoExpressao()
@@ -150,16 +185,16 @@ public final class ADefConst extends PDefConst
         _defCorpoExpressao_ = node;
     }
 
-    public TFechaColchete getFechaColchete()
+    public TFechaColchete getFcInterno()
     {
-        return _fechaColchete_;
+        return _fcInterno_;
     }
 
-    public void setFechaColchete(TFechaColchete node)
+    public void setFcInterno(TFechaColchete node)
     {
-        if(_fechaColchete_ != null)
+        if(_fcInterno_ != null)
         {
-            _fechaColchete_.parent(null);
+            _fcInterno_.parent(null);
         }
 
         if(node != null)
@@ -172,21 +207,54 @@ public final class ADefConst extends PDefConst
             node.parent(this);
         }
 
-        _fechaColchete_ = node;
+        _fcInterno_ = node;
+    }
+
+    public TFechaColchete getFcExterno()
+    {
+        return _fcExterno_;
+    }
+
+    public void setFcExterno(TFechaColchete node)
+    {
+        if(_fcExterno_ != null)
+        {
+            _fcExterno_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        _fcExterno_ = node;
     }
 
     public String toString()
     {
         return ""
+            + toString(_acExterno_)
             + toString(_defTipo_)
             + toString(_idconst_)
-            + toString(_abreColchete_)
+            + toString(_acInterno_)
             + toString(_defCorpoExpressao_)
-            + toString(_fechaColchete_);
+            + toString(_fcInterno_)
+            + toString(_fcExterno_);
     }
 
     void removeChild(Node child)
     {
+        if(_acExterno_ == child)
+        {
+            _acExterno_ = null;
+            return;
+        }
+
         if(_defTipo_ == child)
         {
             _defTipo_ = null;
@@ -199,9 +267,9 @@ public final class ADefConst extends PDefConst
             return;
         }
 
-        if(_abreColchete_ == child)
+        if(_acInterno_ == child)
         {
-            _abreColchete_ = null;
+            _acInterno_ = null;
             return;
         }
 
@@ -211,9 +279,15 @@ public final class ADefConst extends PDefConst
             return;
         }
 
-        if(_fechaColchete_ == child)
+        if(_fcInterno_ == child)
         {
-            _fechaColchete_ = null;
+            _fcInterno_ = null;
+            return;
+        }
+
+        if(_fcExterno_ == child)
+        {
+            _fcExterno_ = null;
             return;
         }
 
@@ -221,6 +295,12 @@ public final class ADefConst extends PDefConst
 
     void replaceChild(Node oldChild, Node newChild)
     {
+        if(_acExterno_ == oldChild)
+        {
+            setAcExterno((TAbreColchete) newChild);
+            return;
+        }
+
         if(_defTipo_ == oldChild)
         {
             setDefTipo((PDefTipo) newChild);
@@ -233,9 +313,9 @@ public final class ADefConst extends PDefConst
             return;
         }
 
-        if(_abreColchete_ == oldChild)
+        if(_acInterno_ == oldChild)
         {
-            setAbreColchete((TAbreColchete) newChild);
+            setAcInterno((TAbreColchete) newChild);
             return;
         }
 
@@ -245,9 +325,15 @@ public final class ADefConst extends PDefConst
             return;
         }
 
-        if(_fechaColchete_ == oldChild)
+        if(_fcInterno_ == oldChild)
         {
-            setFechaColchete((TFechaColchete) newChild);
+            setFcInterno((TFechaColchete) newChild);
+            return;
+        }
+
+        if(_fcExterno_ == oldChild)
+        {
+            setFcExterno((TFechaColchete) newChild);
             return;
         }
 

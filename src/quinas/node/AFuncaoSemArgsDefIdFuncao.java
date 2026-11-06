@@ -9,6 +9,8 @@ public final class AFuncaoSemArgsDefIdFuncao extends PDefIdFuncao
 {
     private PDefTipo _defTipo_;
     private TIdfuncao _idfuncao_;
+    private TAbreColchete _abreColchete_;
+    private TFechaColchete _fechaColchete_;
 
     public AFuncaoSemArgsDefIdFuncao()
     {
@@ -16,18 +18,26 @@ public final class AFuncaoSemArgsDefIdFuncao extends PDefIdFuncao
 
     public AFuncaoSemArgsDefIdFuncao(
         PDefTipo _defTipo_,
-        TIdfuncao _idfuncao_)
+        TIdfuncao _idfuncao_,
+        TAbreColchete _abreColchete_,
+        TFechaColchete _fechaColchete_)
     {
         setDefTipo(_defTipo_);
 
         setIdfuncao(_idfuncao_);
+
+        setAbreColchete(_abreColchete_);
+
+        setFechaColchete(_fechaColchete_);
 
     }
     public Object clone()
     {
         return new AFuncaoSemArgsDefIdFuncao(
             (PDefTipo) cloneNode(_defTipo_),
-            (TIdfuncao) cloneNode(_idfuncao_));
+            (TIdfuncao) cloneNode(_idfuncao_),
+            (TAbreColchete) cloneNode(_abreColchete_),
+            (TFechaColchete) cloneNode(_fechaColchete_));
     }
 
     public void apply(Switch sw)
@@ -85,11 +95,63 @@ public final class AFuncaoSemArgsDefIdFuncao extends PDefIdFuncao
         _idfuncao_ = node;
     }
 
+    public TAbreColchete getAbreColchete()
+    {
+        return _abreColchete_;
+    }
+
+    public void setAbreColchete(TAbreColchete node)
+    {
+        if(_abreColchete_ != null)
+        {
+            _abreColchete_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        _abreColchete_ = node;
+    }
+
+    public TFechaColchete getFechaColchete()
+    {
+        return _fechaColchete_;
+    }
+
+    public void setFechaColchete(TFechaColchete node)
+    {
+        if(_fechaColchete_ != null)
+        {
+            _fechaColchete_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        _fechaColchete_ = node;
+    }
+
     public String toString()
     {
         return ""
             + toString(_defTipo_)
-            + toString(_idfuncao_);
+            + toString(_idfuncao_)
+            + toString(_abreColchete_)
+            + toString(_fechaColchete_);
     }
 
     void removeChild(Node child)
@@ -106,6 +168,18 @@ public final class AFuncaoSemArgsDefIdFuncao extends PDefIdFuncao
             return;
         }
 
+        if(_abreColchete_ == child)
+        {
+            _abreColchete_ = null;
+            return;
+        }
+
+        if(_fechaColchete_ == child)
+        {
+            _fechaColchete_ = null;
+            return;
+        }
+
     }
 
     void replaceChild(Node oldChild, Node newChild)
@@ -119,6 +193,18 @@ public final class AFuncaoSemArgsDefIdFuncao extends PDefIdFuncao
         if(_idfuncao_ == oldChild)
         {
             setIdfuncao((TIdfuncao) newChild);
+            return;
+        }
+
+        if(_abreColchete_ == oldChild)
+        {
+            setAbreColchete((TAbreColchete) newChild);
+            return;
+        }
+
+        if(_fechaColchete_ == oldChild)
+        {
+            setFechaColchete((TFechaColchete) newChild);
             return;
         }
 

@@ -9,9 +9,7 @@ public final class AFuncaoComArgsDefIdFuncao extends PDefIdFuncao
 {
     private PDefTipo _defTipo_;
     private TIdfuncao _idfuncao_;
-    private TAbreColchete _abreColchete_;
     private PDefParam _defParam_;
-    private TFechaColchete _fechaColchete_;
 
     public AFuncaoComArgsDefIdFuncao()
     {
@@ -20,19 +18,13 @@ public final class AFuncaoComArgsDefIdFuncao extends PDefIdFuncao
     public AFuncaoComArgsDefIdFuncao(
         PDefTipo _defTipo_,
         TIdfuncao _idfuncao_,
-        TAbreColchete _abreColchete_,
-        PDefParam _defParam_,
-        TFechaColchete _fechaColchete_)
+        PDefParam _defParam_)
     {
         setDefTipo(_defTipo_);
 
         setIdfuncao(_idfuncao_);
 
-        setAbreColchete(_abreColchete_);
-
         setDefParam(_defParam_);
-
-        setFechaColchete(_fechaColchete_);
 
     }
     public Object clone()
@@ -40,9 +32,7 @@ public final class AFuncaoComArgsDefIdFuncao extends PDefIdFuncao
         return new AFuncaoComArgsDefIdFuncao(
             (PDefTipo) cloneNode(_defTipo_),
             (TIdfuncao) cloneNode(_idfuncao_),
-            (TAbreColchete) cloneNode(_abreColchete_),
-            (PDefParam) cloneNode(_defParam_),
-            (TFechaColchete) cloneNode(_fechaColchete_));
+            (PDefParam) cloneNode(_defParam_));
     }
 
     public void apply(Switch sw)
@@ -100,31 +90,6 @@ public final class AFuncaoComArgsDefIdFuncao extends PDefIdFuncao
         _idfuncao_ = node;
     }
 
-    public TAbreColchete getAbreColchete()
-    {
-        return _abreColchete_;
-    }
-
-    public void setAbreColchete(TAbreColchete node)
-    {
-        if(_abreColchete_ != null)
-        {
-            _abreColchete_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        _abreColchete_ = node;
-    }
-
     public PDefParam getDefParam()
     {
         return _defParam_;
@@ -150,39 +115,12 @@ public final class AFuncaoComArgsDefIdFuncao extends PDefIdFuncao
         _defParam_ = node;
     }
 
-    public TFechaColchete getFechaColchete()
-    {
-        return _fechaColchete_;
-    }
-
-    public void setFechaColchete(TFechaColchete node)
-    {
-        if(_fechaColchete_ != null)
-        {
-            _fechaColchete_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        _fechaColchete_ = node;
-    }
-
     public String toString()
     {
         return ""
             + toString(_defTipo_)
             + toString(_idfuncao_)
-            + toString(_abreColchete_)
-            + toString(_defParam_)
-            + toString(_fechaColchete_);
+            + toString(_defParam_);
     }
 
     void removeChild(Node child)
@@ -199,21 +137,9 @@ public final class AFuncaoComArgsDefIdFuncao extends PDefIdFuncao
             return;
         }
 
-        if(_abreColchete_ == child)
-        {
-            _abreColchete_ = null;
-            return;
-        }
-
         if(_defParam_ == child)
         {
             _defParam_ = null;
-            return;
-        }
-
-        if(_fechaColchete_ == child)
-        {
-            _fechaColchete_ = null;
             return;
         }
 
@@ -233,21 +159,9 @@ public final class AFuncaoComArgsDefIdFuncao extends PDefIdFuncao
             return;
         }
 
-        if(_abreColchete_ == oldChild)
-        {
-            setAbreColchete((TAbreColchete) newChild);
-            return;
-        }
-
         if(_defParam_ == oldChild)
         {
             setDefParam((PDefParam) newChild);
-            return;
-        }
-
-        if(_fechaColchete_ == oldChild)
-        {
-            setFechaColchete((TFechaColchete) newChild);
             return;
         }
 

@@ -6,30 +6,25 @@ import quinas.analysis.*;
 
 public final class TPotencia extends Token
 {
-    public TPotencia()
+    public TPotencia(String text)
     {
-        super.setText("�");
+        setText(text);
     }
 
-    public TPotencia(int line, int pos)
+    public TPotencia(String text, int line, int pos)
     {
-        super.setText("�");
+        setText(text);
         setLine(line);
         setPos(pos);
     }
 
     public Object clone()
     {
-      return new TPotencia(getLine(), getPos());
+      return new TPotencia(getText(), getLine(), getPos());
     }
 
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseTPotencia(this);
-    }
-
-    public void setText(String text)
-    {
-        throw new RuntimeException("Cannot change TPotencia text.");
     }
 }

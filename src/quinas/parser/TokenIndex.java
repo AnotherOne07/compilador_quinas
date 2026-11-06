@@ -174,13 +174,8 @@ class TokenIndex extends AnalysisAdapter
         index = 32;
     }
 
-    public void caseTVazio(TVazio node)
-    {
-        index = 33;
-    }
-
     public void caseEOF(EOF node)
     {
-        index = 34;
+        index = 33;
     }
 }

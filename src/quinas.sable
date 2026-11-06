@@ -37,12 +37,12 @@ Tokens
     {inicio_linha->corpo_linha, corpo_linha} divisao_inteira = '//';
     {inicio_linha->corpo_linha, corpo_linha} divisao_real = '/';
     {inicio_linha->corpo_linha, corpo_linha} resto = 92;
-    {inicio_linha->corpo_linha, corpo_linha} potencia = '´';
+    {inicio_linha->corpo_linha, corpo_linha} potencia = 180;
     {inicio_linha->corpo_linha, corpo_linha} maior_que = '>>';
     {inicio_linha->corpo_linha, corpo_linha} menor_que = '<<';
     {inicio_linha->corpo_linha, corpo_linha} igual = '==';
     {inicio_linha->corpo_linha, corpo_linha} e = '^';
-    {inicio_linha->corpo_linha, corpo_linha} nao = '¬';
+    {inicio_linha->corpo_linha, corpo_linha} nao = 172;
     {inicio_linha->corpo_linha, corpo_linha} ou = 'v';
     {inicio_linha->corpo_linha, corpo_linha} abre_colchete = '[';
     {inicio_linha->corpo_linha, corpo_linha} fecha_colchete = ']';
@@ -62,10 +62,9 @@ Tokens
 
     /* O comentário de bloco termina na primeira ocorrência de --/ */
     {inicio_linha->corpo_linha, corpo_linha} comentario_bloco = '/--' (sem_hifen | '-' sem_hifen | '--' sem_barra)* '-'? '--/';
-    {inicio_linha} comentario_linha = '--' sem_quebra*;
+    {inicio_linha, corpo_linha} comentario_linha = '--' sem_quebra*;
     {inicio_linha->corpo_linha, corpo_linha} espacos = (' ' | 9)+;
     {inicio_linha, corpo_linha->inicio_linha} quebra = cr lf | cr | lf;
-    {inicio_linha->corpo_linha, corpo_linha} vazio = (' ' | rc | nl)+;
 
 Ignored Tokens
     comentario_bloco,
@@ -79,23 +78,32 @@ exp = def_funcao;
 
 def_funcao = 
 	{funcao_inicial} inicio def_funcao |
-	{def_funcao} corpo_funcao;
+	{vazio} |
+	{corpo_funcao} corpo_funcao def_funcao;
 	
 corpo_funcao = abre_colchete def_assinatura_funcao fecha_colchete;
 
 def_assinatura_funcao = def_id_funcao def_param dois_pontos def_expressao;
 
 def_id_funcao = 
-	{funcao_sem_args} def_tipo idfuncao |
-	{funcao_com_args} def_tipo idfuncao abre_colchete def_param fecha_colchete;
+	{id_funcao }def_tipo idfuncao |
+	{funcao_primeira_classe} def_tipo idfuncao def_param;
 	
-chamada_funcao = idfuncao def_lista_args;
+chamada_funcao = 
+	{com_args} idfuncao abre_colchete def_lista_args fecha_colchete |
+	{sem_args} idfuncao;
 
 def_param = 
-	{param_modelo} abre_colchete def_param fecha_colchete |
-	{sem_args} vazio |
-	{primeiro_arg} parametro def_param |
-	{args_seguintes} separador parametro def_param;
+	{param_modelo} abre_colchete lista_param fecha_colchete |
+	{sem_args} ;
+
+lista_param = 
+	{vazio} |
+    {elementos} elementos_param;
+	
+elementos_param = 
+	{primeiro_arg} parametro |
+	{args_seguintes} parametro separador elementos_param;
 	
 parametro =
 	{def_param_id} def_tipo id |
@@ -150,14 +158,17 @@ termo_primario =
 	{agrupamento} abre_agrupamento def_corpo_expressao fecha_agrupamento;
 	
 def_lista_args = 
-	{lista_args} abre_colchete def_lista_args fecha_colchete |
-	{sem_args} vazio |
-	{arg_unico} id def_lista_args |
-	{arg_seguinte} separador id def_lista_args;
+	{sem_args} |
+	{arg_unico} def_corpo_expressao |
+	{arg_seguinte} def_corpo_expressao separador def_lista_args;
 
 def_id = def_tipo id;
 
-bloco_exp = abre_colchete def_const def_corpo_expressao fecha_colchete;
+bloco_exp = abre_colchete bloco_interno fecha_colchete;
+
+bloco_interno = 
+	{com_constantes} def_const bloco_interno |
+	{sem_constantes} def_corpo_expressao;
 
 def_guarda = abre_colchete exp_guarda fecha_colchete;
 
@@ -165,7 +176,7 @@ exp_guarda =
 	{guarda_expressao} guarda [esq]:def_corpo_expressao atribuicao [dir]:def_corpo_expressao exp_guarda ||
 	{guarda_caso_padrao} guarda caso_padrao atribuicao def_corpo_expressao;
 
-def_const = def_tipo idconst abre_colchete def_corpo_expressao fecha_colchete;
+def_const = [ac_externo]:abre_colchete def_tipo idconst [ac_interno]:abre_colchete def_corpo_expressao [fc_interno]:fecha_colchete [fc_externo]:fecha_colchete;
 	
 def_tipo = 
 	{tipo_numero} kw_numero |

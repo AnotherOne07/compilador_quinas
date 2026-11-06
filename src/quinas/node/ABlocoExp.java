@@ -8,8 +8,7 @@ import quinas.analysis.*;
 public final class ABlocoExp extends PBlocoExp
 {
     private TAbreColchete _abreColchete_;
-    private PDefConst _defConst_;
-    private PDefCorpoExpressao _defCorpoExpressao_;
+    private PBlocoInterno _blocoInterno_;
     private TFechaColchete _fechaColchete_;
 
     public ABlocoExp()
@@ -18,15 +17,12 @@ public final class ABlocoExp extends PBlocoExp
 
     public ABlocoExp(
         TAbreColchete _abreColchete_,
-        PDefConst _defConst_,
-        PDefCorpoExpressao _defCorpoExpressao_,
+        PBlocoInterno _blocoInterno_,
         TFechaColchete _fechaColchete_)
     {
         setAbreColchete(_abreColchete_);
 
-        setDefConst(_defConst_);
-
-        setDefCorpoExpressao(_defCorpoExpressao_);
+        setBlocoInterno(_blocoInterno_);
 
         setFechaColchete(_fechaColchete_);
 
@@ -35,8 +31,7 @@ public final class ABlocoExp extends PBlocoExp
     {
         return new ABlocoExp(
             (TAbreColchete) cloneNode(_abreColchete_),
-            (PDefConst) cloneNode(_defConst_),
-            (PDefCorpoExpressao) cloneNode(_defCorpoExpressao_),
+            (PBlocoInterno) cloneNode(_blocoInterno_),
             (TFechaColchete) cloneNode(_fechaColchete_));
     }
 
@@ -70,16 +65,16 @@ public final class ABlocoExp extends PBlocoExp
         _abreColchete_ = node;
     }
 
-    public PDefConst getDefConst()
+    public PBlocoInterno getBlocoInterno()
     {
-        return _defConst_;
+        return _blocoInterno_;
     }
 
-    public void setDefConst(PDefConst node)
+    public void setBlocoInterno(PBlocoInterno node)
     {
-        if(_defConst_ != null)
+        if(_blocoInterno_ != null)
         {
-            _defConst_.parent(null);
+            _blocoInterno_.parent(null);
         }
 
         if(node != null)
@@ -92,32 +87,7 @@ public final class ABlocoExp extends PBlocoExp
             node.parent(this);
         }
 
-        _defConst_ = node;
-    }
-
-    public PDefCorpoExpressao getDefCorpoExpressao()
-    {
-        return _defCorpoExpressao_;
-    }
-
-    public void setDefCorpoExpressao(PDefCorpoExpressao node)
-    {
-        if(_defCorpoExpressao_ != null)
-        {
-            _defCorpoExpressao_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        _defCorpoExpressao_ = node;
+        _blocoInterno_ = node;
     }
 
     public TFechaColchete getFechaColchete()
@@ -149,8 +119,7 @@ public final class ABlocoExp extends PBlocoExp
     {
         return ""
             + toString(_abreColchete_)
-            + toString(_defConst_)
-            + toString(_defCorpoExpressao_)
+            + toString(_blocoInterno_)
             + toString(_fechaColchete_);
     }
 
@@ -162,15 +131,9 @@ public final class ABlocoExp extends PBlocoExp
             return;
         }
 
-        if(_defConst_ == child)
+        if(_blocoInterno_ == child)
         {
-            _defConst_ = null;
-            return;
-        }
-
-        if(_defCorpoExpressao_ == child)
-        {
-            _defCorpoExpressao_ = null;
+            _blocoInterno_ = null;
             return;
         }
 
@@ -190,15 +153,9 @@ public final class ABlocoExp extends PBlocoExp
             return;
         }
 
-        if(_defConst_ == oldChild)
+        if(_blocoInterno_ == oldChild)
         {
-            setDefConst((PDefConst) newChild);
-            return;
-        }
-
-        if(_defCorpoExpressao_ == oldChild)
-        {
-            setDefCorpoExpressao((PDefCorpoExpressao) newChild);
+            setBlocoInterno((PBlocoInterno) newChild);
             return;
         }
 

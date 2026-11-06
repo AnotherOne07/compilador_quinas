@@ -7,27 +7,22 @@ import quinas.analysis.*;
 
 public final class AArgUnicoDefListaArgs extends PDefListaArgs
 {
-    private TId _id_;
-    private PDefListaArgs _defListaArgs_;
+    private PDefCorpoExpressao _defCorpoExpressao_;
 
     public AArgUnicoDefListaArgs()
     {
     }
 
     public AArgUnicoDefListaArgs(
-        TId _id_,
-        PDefListaArgs _defListaArgs_)
+        PDefCorpoExpressao _defCorpoExpressao_)
     {
-        setId(_id_);
-
-        setDefListaArgs(_defListaArgs_);
+        setDefCorpoExpressao(_defCorpoExpressao_);
 
     }
     public Object clone()
     {
         return new AArgUnicoDefListaArgs(
-            (TId) cloneNode(_id_),
-            (PDefListaArgs) cloneNode(_defListaArgs_));
+            (PDefCorpoExpressao) cloneNode(_defCorpoExpressao_));
     }
 
     public void apply(Switch sw)
@@ -35,16 +30,16 @@ public final class AArgUnicoDefListaArgs extends PDefListaArgs
         ((Analysis) sw).caseAArgUnicoDefListaArgs(this);
     }
 
-    public TId getId()
+    public PDefCorpoExpressao getDefCorpoExpressao()
     {
-        return _id_;
+        return _defCorpoExpressao_;
     }
 
-    public void setId(TId node)
+    public void setDefCorpoExpressao(PDefCorpoExpressao node)
     {
-        if(_id_ != null)
+        if(_defCorpoExpressao_ != null)
         {
-            _id_.parent(null);
+            _defCorpoExpressao_.parent(null);
         }
 
         if(node != null)
@@ -57,52 +52,20 @@ public final class AArgUnicoDefListaArgs extends PDefListaArgs
             node.parent(this);
         }
 
-        _id_ = node;
-    }
-
-    public PDefListaArgs getDefListaArgs()
-    {
-        return _defListaArgs_;
-    }
-
-    public void setDefListaArgs(PDefListaArgs node)
-    {
-        if(_defListaArgs_ != null)
-        {
-            _defListaArgs_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        _defListaArgs_ = node;
+        _defCorpoExpressao_ = node;
     }
 
     public String toString()
     {
         return ""
-            + toString(_id_)
-            + toString(_defListaArgs_);
+            + toString(_defCorpoExpressao_);
     }
 
     void removeChild(Node child)
     {
-        if(_id_ == child)
+        if(_defCorpoExpressao_ == child)
         {
-            _id_ = null;
-            return;
-        }
-
-        if(_defListaArgs_ == child)
-        {
-            _defListaArgs_ = null;
+            _defCorpoExpressao_ = null;
             return;
         }
 
@@ -110,15 +73,9 @@ public final class AArgUnicoDefListaArgs extends PDefListaArgs
 
     void replaceChild(Node oldChild, Node newChild)
     {
-        if(_id_ == oldChild)
+        if(_defCorpoExpressao_ == oldChild)
         {
-            setId((TId) newChild);
-            return;
-        }
-
-        if(_defListaArgs_ == oldChild)
-        {
-            setDefListaArgs((PDefListaArgs) newChild);
+            setDefCorpoExpressao((PDefCorpoExpressao) newChild);
             return;
         }
 

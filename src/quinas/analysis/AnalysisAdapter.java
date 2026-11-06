@@ -78,7 +78,12 @@ public class AnalysisAdapter implements Analysis
         defaultCase(node);
     }
 
-    public void caseADefFuncaoDefFuncao(ADefFuncaoDefFuncao node)
+    public void caseAVazioDefFuncao(AVazioDefFuncao node)
+    {
+        defaultCase(node);
+    }
+
+    public void caseACorpoFuncaoDefFuncao(ACorpoFuncaoDefFuncao node)
     {
         defaultCase(node);
     }
@@ -93,17 +98,22 @@ public class AnalysisAdapter implements Analysis
         defaultCase(node);
     }
 
-    public void caseAFuncaoSemArgsDefIdFuncao(AFuncaoSemArgsDefIdFuncao node)
+    public void caseAIdFuncaoDefIdFuncao(AIdFuncaoDefIdFuncao node)
     {
         defaultCase(node);
     }
 
-    public void caseAFuncaoComArgsDefIdFuncao(AFuncaoComArgsDefIdFuncao node)
+    public void caseAFuncaoPrimeiraClasseDefIdFuncao(AFuncaoPrimeiraClasseDefIdFuncao node)
     {
         defaultCase(node);
     }
 
-    public void caseAChamadaFuncao(AChamadaFuncao node)
+    public void caseAComArgsChamadaFuncao(AComArgsChamadaFuncao node)
+    {
+        defaultCase(node);
+    }
+
+    public void caseASemArgsChamadaFuncao(ASemArgsChamadaFuncao node)
     {
         defaultCase(node);
     }
@@ -118,12 +128,22 @@ public class AnalysisAdapter implements Analysis
         defaultCase(node);
     }
 
-    public void caseAPrimeiroArgDefParam(APrimeiroArgDefParam node)
+    public void caseAVazioListaParam(AVazioListaParam node)
     {
         defaultCase(node);
     }
 
-    public void caseAArgsSeguintesDefParam(AArgsSeguintesDefParam node)
+    public void caseAElementosListaParam(AElementosListaParam node)
+    {
+        defaultCase(node);
+    }
+
+    public void caseAPrimeiroArgElementosParam(APrimeiroArgElementosParam node)
+    {
+        defaultCase(node);
+    }
+
+    public void caseAArgsSeguintesElementosParam(AArgsSeguintesElementosParam node)
     {
         defaultCase(node);
     }
@@ -288,11 +308,6 @@ public class AnalysisAdapter implements Analysis
         defaultCase(node);
     }
 
-    public void caseAListaArgsDefListaArgs(AListaArgsDefListaArgs node)
-    {
-        defaultCase(node);
-    }
-
     public void caseASemArgsDefListaArgs(ASemArgsDefListaArgs node)
     {
         defaultCase(node);
@@ -314,6 +329,16 @@ public class AnalysisAdapter implements Analysis
     }
 
     public void caseABlocoExp(ABlocoExp node)
+    {
+        defaultCase(node);
+    }
+
+    public void caseAComConstantesBlocoInterno(AComConstantesBlocoInterno node)
+    {
+        defaultCase(node);
+    }
+
+    public void caseASemConstantesBlocoInterno(ASemConstantesBlocoInterno node)
     {
         defaultCase(node);
     }
@@ -554,11 +579,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     public void caseTQuebra(TQuebra node)
-    {
-        defaultCase(node);
-    }
-
-    public void caseTVazio(TVazio node)
     {
         defaultCase(node);
     }

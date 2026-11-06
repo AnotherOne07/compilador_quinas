@@ -14,16 +14,20 @@ public interface Analysis extends Switch
     void caseStart(Start node);
     void caseAExp(AExp node);
     void caseAFuncaoInicialDefFuncao(AFuncaoInicialDefFuncao node);
-    void caseADefFuncaoDefFuncao(ADefFuncaoDefFuncao node);
+    void caseAVazioDefFuncao(AVazioDefFuncao node);
+    void caseACorpoFuncaoDefFuncao(ACorpoFuncaoDefFuncao node);
     void caseACorpoFuncao(ACorpoFuncao node);
     void caseADefAssinaturaFuncao(ADefAssinaturaFuncao node);
-    void caseAFuncaoSemArgsDefIdFuncao(AFuncaoSemArgsDefIdFuncao node);
-    void caseAFuncaoComArgsDefIdFuncao(AFuncaoComArgsDefIdFuncao node);
-    void caseAChamadaFuncao(AChamadaFuncao node);
+    void caseAIdFuncaoDefIdFuncao(AIdFuncaoDefIdFuncao node);
+    void caseAFuncaoPrimeiraClasseDefIdFuncao(AFuncaoPrimeiraClasseDefIdFuncao node);
+    void caseAComArgsChamadaFuncao(AComArgsChamadaFuncao node);
+    void caseASemArgsChamadaFuncao(ASemArgsChamadaFuncao node);
     void caseAParamModeloDefParam(AParamModeloDefParam node);
     void caseASemArgsDefParam(ASemArgsDefParam node);
-    void caseAPrimeiroArgDefParam(APrimeiroArgDefParam node);
-    void caseAArgsSeguintesDefParam(AArgsSeguintesDefParam node);
+    void caseAVazioListaParam(AVazioListaParam node);
+    void caseAElementosListaParam(AElementosListaParam node);
+    void caseAPrimeiroArgElementosParam(APrimeiroArgElementosParam node);
+    void caseAArgsSeguintesElementosParam(AArgsSeguintesElementosParam node);
     void caseADefParamIdParametro(ADefParamIdParametro node);
     void caseADefParamFuncaoParametro(ADefParamFuncaoParametro node);
     void caseADefExpressao(ADefExpressao node);
@@ -56,12 +60,13 @@ public interface Analysis extends Switch
     void caseAChamadaTermoPrimario(AChamadaTermoPrimario node);
     void caseAGuardaTermoPrimario(AGuardaTermoPrimario node);
     void caseAAgrupamentoTermoPrimario(AAgrupamentoTermoPrimario node);
-    void caseAListaArgsDefListaArgs(AListaArgsDefListaArgs node);
     void caseASemArgsDefListaArgs(ASemArgsDefListaArgs node);
     void caseAArgUnicoDefListaArgs(AArgUnicoDefListaArgs node);
     void caseAArgSeguinteDefListaArgs(AArgSeguinteDefListaArgs node);
     void caseADefId(ADefId node);
     void caseABlocoExp(ABlocoExp node);
+    void caseAComConstantesBlocoInterno(AComConstantesBlocoInterno node);
+    void caseASemConstantesBlocoInterno(ASemConstantesBlocoInterno node);
     void caseADefGuarda(ADefGuarda node);
     void caseAGuardaExpressaoExpGuarda(AGuardaExpressaoExpGuarda node);
     void caseAExpGuarda(AExpGuarda node);
@@ -111,6 +116,5 @@ public interface Analysis extends Switch
     void caseTComentarioLinha(TComentarioLinha node);
     void caseTEspacos(TEspacos node);
     void caseTQuebra(TQuebra node);
-    void caseTVazio(TVazio node);
     void caseEOF(EOF node);
 }

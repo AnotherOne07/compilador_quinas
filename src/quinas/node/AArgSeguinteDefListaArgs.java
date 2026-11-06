@@ -7,8 +7,8 @@ import quinas.analysis.*;
 
 public final class AArgSeguinteDefListaArgs extends PDefListaArgs
 {
+    private PDefCorpoExpressao _defCorpoExpressao_;
     private TSeparador _separador_;
-    private TId _id_;
     private PDefListaArgs _defListaArgs_;
 
     public AArgSeguinteDefListaArgs()
@@ -16,13 +16,13 @@ public final class AArgSeguinteDefListaArgs extends PDefListaArgs
     }
 
     public AArgSeguinteDefListaArgs(
+        PDefCorpoExpressao _defCorpoExpressao_,
         TSeparador _separador_,
-        TId _id_,
         PDefListaArgs _defListaArgs_)
     {
-        setSeparador(_separador_);
+        setDefCorpoExpressao(_defCorpoExpressao_);
 
-        setId(_id_);
+        setSeparador(_separador_);
 
         setDefListaArgs(_defListaArgs_);
 
@@ -30,14 +30,39 @@ public final class AArgSeguinteDefListaArgs extends PDefListaArgs
     public Object clone()
     {
         return new AArgSeguinteDefListaArgs(
+            (PDefCorpoExpressao) cloneNode(_defCorpoExpressao_),
             (TSeparador) cloneNode(_separador_),
-            (TId) cloneNode(_id_),
             (PDefListaArgs) cloneNode(_defListaArgs_));
     }
 
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseAArgSeguinteDefListaArgs(this);
+    }
+
+    public PDefCorpoExpressao getDefCorpoExpressao()
+    {
+        return _defCorpoExpressao_;
+    }
+
+    public void setDefCorpoExpressao(PDefCorpoExpressao node)
+    {
+        if(_defCorpoExpressao_ != null)
+        {
+            _defCorpoExpressao_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        _defCorpoExpressao_ = node;
     }
 
     public TSeparador getSeparador()
@@ -63,31 +88,6 @@ public final class AArgSeguinteDefListaArgs extends PDefListaArgs
         }
 
         _separador_ = node;
-    }
-
-    public TId getId()
-    {
-        return _id_;
-    }
-
-    public void setId(TId node)
-    {
-        if(_id_ != null)
-        {
-            _id_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        _id_ = node;
     }
 
     public PDefListaArgs getDefListaArgs()
@@ -118,22 +118,22 @@ public final class AArgSeguinteDefListaArgs extends PDefListaArgs
     public String toString()
     {
         return ""
+            + toString(_defCorpoExpressao_)
             + toString(_separador_)
-            + toString(_id_)
             + toString(_defListaArgs_);
     }
 
     void removeChild(Node child)
     {
-        if(_separador_ == child)
+        if(_defCorpoExpressao_ == child)
         {
-            _separador_ = null;
+            _defCorpoExpressao_ = null;
             return;
         }
 
-        if(_id_ == child)
+        if(_separador_ == child)
         {
-            _id_ = null;
+            _separador_ = null;
             return;
         }
 
@@ -147,15 +147,15 @@ public final class AArgSeguinteDefListaArgs extends PDefListaArgs
 
     void replaceChild(Node oldChild, Node newChild)
     {
-        if(_separador_ == oldChild)
+        if(_defCorpoExpressao_ == oldChild)
         {
-            setSeparador((TSeparador) newChild);
+            setDefCorpoExpressao((PDefCorpoExpressao) newChild);
             return;
         }
 
-        if(_id_ == oldChild)
+        if(_separador_ == oldChild)
         {
-            setId((TId) newChild);
+            setSeparador((TSeparador) newChild);
             return;
         }
 

@@ -8,7 +8,7 @@ import quinas.analysis.*;
 public final class AParamModeloDefParam extends PDefParam
 {
     private TAbreColchete _abreColchete_;
-    private PDefParam _defParam_;
+    private PListaParam _listaParam_;
     private TFechaColchete _fechaColchete_;
 
     public AParamModeloDefParam()
@@ -17,12 +17,12 @@ public final class AParamModeloDefParam extends PDefParam
 
     public AParamModeloDefParam(
         TAbreColchete _abreColchete_,
-        PDefParam _defParam_,
+        PListaParam _listaParam_,
         TFechaColchete _fechaColchete_)
     {
         setAbreColchete(_abreColchete_);
 
-        setDefParam(_defParam_);
+        setListaParam(_listaParam_);
 
         setFechaColchete(_fechaColchete_);
 
@@ -31,7 +31,7 @@ public final class AParamModeloDefParam extends PDefParam
     {
         return new AParamModeloDefParam(
             (TAbreColchete) cloneNode(_abreColchete_),
-            (PDefParam) cloneNode(_defParam_),
+            (PListaParam) cloneNode(_listaParam_),
             (TFechaColchete) cloneNode(_fechaColchete_));
     }
 
@@ -65,16 +65,16 @@ public final class AParamModeloDefParam extends PDefParam
         _abreColchete_ = node;
     }
 
-    public PDefParam getDefParam()
+    public PListaParam getListaParam()
     {
-        return _defParam_;
+        return _listaParam_;
     }
 
-    public void setDefParam(PDefParam node)
+    public void setListaParam(PListaParam node)
     {
-        if(_defParam_ != null)
+        if(_listaParam_ != null)
         {
-            _defParam_.parent(null);
+            _listaParam_.parent(null);
         }
 
         if(node != null)
@@ -87,7 +87,7 @@ public final class AParamModeloDefParam extends PDefParam
             node.parent(this);
         }
 
-        _defParam_ = node;
+        _listaParam_ = node;
     }
 
     public TFechaColchete getFechaColchete()
@@ -119,7 +119,7 @@ public final class AParamModeloDefParam extends PDefParam
     {
         return ""
             + toString(_abreColchete_)
-            + toString(_defParam_)
+            + toString(_listaParam_)
             + toString(_fechaColchete_);
     }
 
@@ -131,9 +131,9 @@ public final class AParamModeloDefParam extends PDefParam
             return;
         }
 
-        if(_defParam_ == child)
+        if(_listaParam_ == child)
         {
-            _defParam_ = null;
+            _listaParam_ = null;
             return;
         }
 
@@ -153,9 +153,9 @@ public final class AParamModeloDefParam extends PDefParam
             return;
         }
 
-        if(_defParam_ == oldChild)
+        if(_listaParam_ == oldChild)
         {
-            setDefParam((PDefParam) newChild);
+            setListaParam((PListaParam) newChild);
             return;
         }
 

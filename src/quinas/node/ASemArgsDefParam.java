@@ -7,22 +7,13 @@ import quinas.analysis.*;
 
 public final class ASemArgsDefParam extends PDefParam
 {
-    private TVazio _vazio_;
 
     public ASemArgsDefParam()
     {
     }
-
-    public ASemArgsDefParam(
-        TVazio _vazio_)
-    {
-        setVazio(_vazio_);
-
-    }
     public Object clone()
     {
-        return new ASemArgsDefParam(
-            (TVazio) cloneNode(_vazio_));
+        return new ASemArgsDefParam();
     }
 
     public void apply(Switch sw)
@@ -30,54 +21,16 @@ public final class ASemArgsDefParam extends PDefParam
         ((Analysis) sw).caseASemArgsDefParam(this);
     }
 
-    public TVazio getVazio()
-    {
-        return _vazio_;
-    }
-
-    public void setVazio(TVazio node)
-    {
-        if(_vazio_ != null)
-        {
-            _vazio_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        _vazio_ = node;
-    }
-
     public String toString()
     {
-        return ""
-            + toString(_vazio_);
+        return "";
     }
 
     void removeChild(Node child)
     {
-        if(_vazio_ == child)
-        {
-            _vazio_ = null;
-            return;
-        }
-
     }
 
     void replaceChild(Node oldChild, Node newChild)
     {
-        if(_vazio_ == oldChild)
-        {
-            setVazio((TVazio) newChild);
-            return;
-        }
-
     }
 }
